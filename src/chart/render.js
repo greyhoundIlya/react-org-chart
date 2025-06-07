@@ -43,16 +43,23 @@ function render(config) {
   } = config
 
   // Compute the new tree layout.
-  const nodes = tree.nodes(treeData).reverse()
+  const nodes = window.innerWidth <= 460 ? tree.nodes(treeData) : tree.nodes(treeData).reverse() 
   const links = tree.links(nodes)
 
   config.links = links
   config.nodes = nodes
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d) {
-    d.y = d.depth * lineDepthY
-  })
+  if (typeof window !== 'undefined' && window.innerWidth <= 460) {
+    nodes.forEach((d, i) => {
+      d.x = 0
+      d.y = i === 0 ? 0 : i * (nodeHeight + nodePaddingY)
+    })
+  } else {
+    nodes.forEach(d => {
+      d.y = d.depth * lineDepthY
+    })
+  }
 
   // Update the nodes
   const node = svg.selectAll('g.' + CHART_NODE_CLASS).data(

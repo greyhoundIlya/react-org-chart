@@ -89,12 +89,12 @@ function init(options) {
     .attr(
       'transform',
       'translate(' +
-        parseInt(
-          childrenWidth + (elemWidth - childrenWidth * 2) / 2 - margin.left / 2
-        ) +
-        ',' +
-        48 +
-        ')'
+      parseInt(
+        childrenWidth + (elemWidth - childrenWidth * 2) / 2 - margin.left / 2
+      ) +
+      ',' +
+      48 +
+      ')'
     )
 
   // Define box shadow and avatar border radius
@@ -119,9 +119,13 @@ function init(options) {
   config.render = render
 
   // Defined zoom behavior
+
+  const isMobile = document.documentElement.clientWidth <= 460;
+  const weights = isMobile ? 4 : 12;
+
   var zoom = d3.behavior
     .zoom()
-    .scaleExtent([0.1, 2])
+    .scaleExtent([0.2, weights])
     .duration(50)
     .on('zoom', zoomed)
 
@@ -151,10 +155,10 @@ function init(options) {
     return d3
       .transition()
       .duration(350)
-      .tween('zoom', function() {
+      .tween('zoom', function () {
         var iTranslate = d3.interpolate(zoom.translate(), translate),
           iScale = d3.interpolate(zoom.scale(), scale)
-        return function(t) {
+        return function (t) {
           zoom.scale(iScale(t)).translate(iTranslate(t))
           zoomed()
         }
