@@ -17,6 +17,7 @@ export default class App extends React.Component {
     }
   }
 
+
   getChild = id => {
     switch (id) {
       case 100:
@@ -82,11 +83,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { tree, downloadingChart } = this.state
-
-    //For downloading org chart as image or pdf based on id
-    const downloadImageId = 'download-image'
-    const downloadPdfId = 'download-pdf'
+    const { tree } = this.state
 
     return (
       <BrowserRouter basename="/react-org-chart">
@@ -106,25 +103,8 @@ export default class App extends React.Component {
                 -
               </button>
             </div>
-            <div className="download-buttons">
-              <button className="btn btn-outline-primary" id="download-image">
-                Download as image
-              </button>
-              <button className="btn btn-outline-primary" id="download-pdf">
-                Download as PDF
-              </button>
-              <a
-                className="github-link"
-                href="https://github.com/unicef/react-org-chart"
-              >
-                Github
-              </a>
-              {downloadingChart && <div>Downloading chart</div>}
-            </div>
             <OrgChart
               tree={tree}
-              downloadImageId={downloadImageId}
-              downloadPdfId={downloadPdfId}
               onConfigChange={config => {
                 this.handleOnChangeConfig(config)
               }}

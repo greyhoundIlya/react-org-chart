@@ -89,12 +89,12 @@ function init(options) {
     .attr(
       'transform',
       'translate(' +
-        parseInt(
-          childrenWidth + (elemWidth - childrenWidth * 2) / 2 - margin.left / 2
-        ) +
-        ',' +
-        48 +
-        ')'
+      parseInt(
+        childrenWidth + (elemWidth - childrenWidth * 2) / 2 - margin.left / 2
+      ) +
+      ',' +
+      48 +
+      ')'
     )
 
   // Define box shadow and avatar border radius
@@ -121,7 +121,7 @@ function init(options) {
   // Defined zoom behavior
   var zoom = d3.behavior
     .zoom()
-    .scaleExtent([0.1, 2])
+    .scaleExtent([0.3, 8])
     .duration(50)
     .on('zoom', zoomed)
 
@@ -151,10 +151,10 @@ function init(options) {
     return d3
       .transition()
       .duration(350)
-      .tween('zoom', function() {
+      .tween('zoom', function () {
         var iTranslate = d3.interpolate(zoom.translate(), translate),
           iScale = d3.interpolate(zoom.scale(), scale)
-        return function(t) {
+        return function (t) {
           zoom.scale(iScale(t)).translate(iTranslate(t))
           zoomed()
         }
@@ -241,7 +241,9 @@ function init(options) {
       return
     }
 
-    svgroot.attr('width', elem.offsetWidth).attr('height', elem.offsetHeight)
+    svgroot
+      .attr('width', elem.offsetWidth)
+      .attr('height', elem.offsetHeight )
   }
 
   if (shouldResize) {
